@@ -1,24 +1,30 @@
 require 'rails_helper'                 
                                        
 RSpec.describe Employee, type: :model do                                                                                                                                      
-  subject do                          
-    Employee.new(                     
-      full_name: "Mukesh Jha",        
-      job_title: "Software Engineer", 
-      country: "India",               
-      salary: 50000,                  
-      email: "mukesh_jha@gmail.com"     
-    )                                 
-  end                                 
-                                      
-  # Presence validations              
-  it "is valid with valid attributes" do                                                                                                                                      
-    expect(subject).to be_valid       
-  end                                 
-                                      
-  it "is invalid without full_name" do
-    subject.full_name = nil           
-    expect(subject).not_to be_valid   
+  subject do
+    Employee.new(
+      first_name: "Mukesh",
+      last_name: "Jha",
+      job_title: "Software Engineer",
+      country: "India",
+      salary: 50000,
+      email: "mukesh_jha@gmail.com"
+    )
+  end
+
+  # Presence validations
+  it "is valid with valid attributes" do
+    expect(subject).to be_valid
+  end
+
+  it "is invalid without first_name" do
+    subject.first_name = nil
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid without last_name" do
+    subject.last_name = nil
+    expect(subject).not_to be_valid
   end                                 
                                       
   it "is invalid without job_title" do
@@ -56,7 +62,7 @@ RSpec.describe Employee, type: :model do
 #
   it "return employee for given name" do
     employee = Employee.create!(subject.attributes)
-    record = Employee.by_name("Mukesh Jha")
+    record = Employee.by_name("Mukesh", "Jha")
     expect(record).to include(employee)
   end
 
