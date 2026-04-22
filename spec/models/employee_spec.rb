@@ -47,4 +47,10 @@ RSpec.describe Employee, type: :model do
     subject.email = nil               
     expect(subject).not_to be_valid   
   end
+
+  it "is invalid for duplicate email" do
+    Employee.create!(subject.attributes)
+    new_record = Employee.new(subject.attributes)
+    expect(new_record).not_to be_valid
+  end
 end  
