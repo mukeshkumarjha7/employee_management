@@ -56,7 +56,7 @@ RSpec.describe Employee, type: :model do
 #
   it "return employee for given name" do
     employee = Employee.create!(subject.attributes)
-    record = Employee.find_by_name("Mukesh Jha")
+    record = Employee.by_name("Mukesh Jha")
     expect(record).to include(employee)
   end
 
