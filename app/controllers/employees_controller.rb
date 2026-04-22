@@ -33,13 +33,15 @@ class EmployeesController < ApplicationController
   end
 
   def search
-    if params[:name].blank? && params[:country].blank? && params[:job_title].blank?
-      return render json: { error: "At least one search parameter (name, country, job_title) is required" }, status: :bad_request
+    if params[:first_name].blank? && params[:last_name].blank? && params[:country].blank? && params[:job_title].blank?
+      return render json: { error: "At least one search parameter (first_name, last_name, country, job_title) is required" }, status: :bad_request
     end
 
     employees = nil
-    if params[:name].present?
-      employees = Employee.by_name(params[:name])
+    if params[:first_name].present? && params[:last_name].present?
+      employees = Employee.by_name(params[:first_name], params[:last_name])
+    elsif params[:first_name].present?
+      employees = Employee.by_first_name(params[:first_name])
     elsif params[:country].present?
       employees = Employee.by_country(params[:country])
     elsif params[:job_title].present?
@@ -58,6 +60,6 @@ class EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.require(:employee).permit(:full_name, :job_title, :country, :salary, :email, :date_of_joining)
+    params.require(:employee).permit(:first_name, :last_name, :job_title, :country, :salary, :email, :date_of_joining)
   end
 end
