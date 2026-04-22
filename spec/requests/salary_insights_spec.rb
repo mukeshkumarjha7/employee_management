@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe "SalaryInsights", type: :request do
   let!(:employee1) do
     Employee.create!(
-      full_name: "Mukesh Jha",
+      first_name: "Mukesh",
+      last_name: "Jha",
       job_title: "Software Engineer",
       country: "India",
       salary: 50000,
@@ -13,7 +14,8 @@ RSpec.describe "SalaryInsights", type: :request do
 
   let!(:employee2) do
     Employee.create!(
-      full_name: "Rahul Singh",
+      first_name: "Rahul",
+      last_name: "Singh",
       job_title: "Software Engineer",
       country: "India",
       salary: 65000,
@@ -23,7 +25,8 @@ RSpec.describe "SalaryInsights", type: :request do
 
   let!(:employee3) do
     Employee.create!(
-      full_name: "Priya Patel",
+      first_name: "Priya",
+      last_name: "Patel",
       job_title: "Product Manager",
       country: "India",
       salary: 80000,
@@ -33,7 +36,8 @@ RSpec.describe "SalaryInsights", type: :request do
 
   let!(:employee4) do
     Employee.create!(
-      full_name: "John Smith",
+      first_name: "John",
+      last_name: "Smith",
       job_title: "Software Engineer",
       country: "USA",
       salary: 120000,

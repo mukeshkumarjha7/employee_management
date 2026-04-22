@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe "Employees", type: :request do
   let(:valid_attributes) do
     {
-      full_name: "Mukesh Jha",
+      first_name: "Mukesh",
+      last_name: "Jha",
       job_title: "Software Engineer",
       country: "India",
       salary: 50000,
@@ -32,14 +33,14 @@ RSpec.describe "Employees", type: :request do
   end
 
   it "does not create an employee for invalid attributes" do
-    post employees_path, params: { employee: valid_attributes.merge(full_name: nil) }
+    post employees_path, params: { employee: valid_attributes.merge(first_name: nil) }
     expect(response).to have_http_status(:unprocessable_entity)
   end
 
   # PATCH /employees/:id
   it "update existing employee" do
     employee = Employee.create!(valid_attributes)
-    patch employee_path(employee), params: { employee: { full_name: "Jha Mukesh" } }
+    patch employee_path(employee), params: { employee: { first_name: "Jha", last_name: "Mukesh" } }
     expect(response).to have_http_status(:ok)
   end
 
@@ -59,16 +60,30 @@ RSpec.describe "Employees", type: :request do
 
   # Add test cases for search
 
-  # GET /employees/search?name=
-  it "returns employees matching the given name" do
+  # GET /employees/search?first_name=&last_name=
+  it "returns employees matching first and last name" do
     Employee.create!(valid_attributes)
-    get search_employees_path, params: { name: "Mukesh Jha" }
+    get search_employees_path, params: { first_name: "Mukesh", last_name: "Jha" }
     expect(response).to have_http_status(:ok)
-    expect(JSON.parse(response.body).map { |e| e["full_name"] }).to include("Mukesh Jha")
+    expect(JSON.parse(response.body).map { |e| e["first_name"] }).to include("Mukesh")
   end
 
-  it "returns empty array when no employee matches the name" do
-    get search_employees_path, params: { name: "Invalid Name" }
+  it "returns empty array when no employee matches first and last name" do
+    get search_employees_path, params: { first_name: "Invalid", last_name: "Name" }
+    expect(response).to have_http_status(:ok)
+    expect(JSON.parse(response.body)).to be_empty
+  end
+
+  # GET /employees/search?first_name=
+  it "returns employees matching first name only" do
+    Employee.create!(valid_attributes)
+    get search_employees_path, params: { first_name: "Mukesh" }
+    expect(response).to have_http_status(:ok)
+    expect(JSON.parse(response.body).map { |e| e["first_name"] }).to include("Mukesh")
+  end
+
+  it "returns empty array when no employee matches first name" do
+    get search_employees_path, params: { first_name: "Unknown" }
     expect(response).to have_http_status(:ok)
     expect(JSON.parse(response.body)).to be_empty
   end
