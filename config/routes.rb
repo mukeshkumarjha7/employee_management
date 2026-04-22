@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "salary_insights/index"
 
   resources :employees do
     collection do
