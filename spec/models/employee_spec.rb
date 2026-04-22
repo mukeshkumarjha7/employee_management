@@ -60,14 +60,25 @@ RSpec.describe Employee, type: :model do
     expect(new_record).not_to be_valid
   end
 #
-  it "return employee for given name" do
+  it "returns employee for given first and last name" do
     employee = Employee.create!(subject.attributes)
     record = Employee.by_name("Mukesh", "Jha")
     expect(record).to include(employee)
   end
 
-  it "return empty if employee doesn't exist" do
-    record = Employee.by_name("Invalid User")
+  it "returns empty if no employee matches first and last name" do
+    record = Employee.by_name("Invalid", "User")
+    expect(record).to be_empty
+  end
+
+  it "returns employee for given first name only" do
+    employee = Employee.create!(subject.attributes)
+    record = Employee.by_first_name("Mukesh")
+    expect(record).to include(employee)
+  end
+
+  it "returns empty if no employee matches first name" do
+    record = Employee.by_first_name("Unknown")
     expect(record).to be_empty
   end
 
