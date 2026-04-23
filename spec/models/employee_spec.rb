@@ -22,8 +22,28 @@ RSpec.describe Employee, type: :model do
     expect(subject).not_to be_valid
   end
 
+  it "is invalid when first_name contains numbers" do
+    subject.first_name = "Mukesh123"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid when first_name contains special characters" do
+    subject.first_name = "Muk@sh!"
+    expect(subject).not_to be_valid
+  end
+
   it "is invalid without last_name" do
     subject.last_name = nil
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if last_name contains numbers" do
+    subject.last_name = "Jha123"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if last_name contains special characters" do
+    subject.last_name = "Jha@#"
     expect(subject).not_to be_valid
   end                                 
                                       
@@ -32,26 +52,77 @@ RSpec.describe Employee, type: :model do
     expect(subject).not_to be_valid   
   end                                 
                                       
-  it "is invalid without country" do  
-    subject.country = nil             
-    expect(subject).not_to be_valid   
-  end                                 
-                                      
-  it "is invalid without salary" do   
-    subject.salary = nil              
-    expect(subject).not_to be_valid   
-  end                                 
-                                      
-  # Salary validation                 
+  it "is invalid without country" do
+    subject.country = nil
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if country contains numbers" do
+    subject.country = "India123"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if country contains special characters" do
+    subject.country = "Ind@a!"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid without salary" do
+    subject.salary = nil
+    expect(subject).not_to be_valid
+  end
+
+  # Salary validation
   it "is invalid if salary is <= 0" do
-    subject.salary = 0                
-    expect(subject).not_to be_valid   
+    subject.salary = 0
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if salary is not a number" do
+    subject.salary = "fifty thousand"
+    expect(subject).not_to be_valid
+  end
+
+  # Date of joining validation
+  it "is invalid if date_of_joining is in the future" do
+    subject.date_of_joining = Date.today + 1
+    expect(subject).not_to be_valid
+  end
+
+  it "is valid if date_of_joining is in the past" do
+    subject.date_of_joining = Date.today - 30
+    expect(subject).to be_valid
   end                                 
                                       
-  # Email validation                  
-  it "is invalid without email" do    
-    subject.email = nil               
-    expect(subject).not_to be_valid   
+  # Email validation
+  it "is invalid without email" do
+    subject.email = nil
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid with missing @ in email" do
+    subject.email = "mukeshjhagmail.com"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if domain is missing in email" do
+    subject.email = "mukeshjha@"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid is username part is missing in email" do
+    subject.email = "@gmail.com"
+    expect(subject).not_to be_valid
+  end
+
+  it "is invalid if domain in invalid" do
+    subject.email = "mukeshjha@gmail"
+    expect(subject).not_to be_valid
+  end
+
+  it "is valid for a proper format email" do
+    subject.email = "mukesh.jha@company.com"
+    expect(subject).to be_valid
   end
 
   it "is invalid for duplicate email" do
