@@ -13,10 +13,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/employees", type: :request do
-  
-  # This should return the minimal set of attributes required to create a valid
-  # Employee. As you add validations to Employee, be sure to
-  # adjust the attributes here as well.
+
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
   }
@@ -30,6 +27,41 @@ RSpec.describe "/employees", type: :request do
       Employee.create! valid_attributes
       get employees_url
       expect(response).to be_successful
+    end
+  end
+
+  describe "pagination" do
+    first_names = %w[Mukesh Rakesh Anil Sikha Anjali Anil Henry Rahul Jack Roshan Will]
+
+    before do
+      first_names.each_with_index do |name, i|
+        Employee.create!(
+          first_name: name,
+          last_name: "Smith",
+          email: "#{name.downcase}#{i}@example.com",
+          job_title: "Engineer",
+          country: "India",
+          salary: 50000
+        )
+      end
+    end
+
+    it "returns first page with 10 employees" do
+      get employees_url
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Mukesh")
+      expect(response.body).not_to include("Will")
+    end
+
+    it "returns second page when page=2 is passed" do
+      get employees_url, params: { page: 2 }
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Will")
+    end
+
+    it "renders pagination links" do
+      get employees_url
+      expect(response.body).to include("page=2")
     end
   end
 
