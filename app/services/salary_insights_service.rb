@@ -7,16 +7,18 @@ class SalaryInsightsService
   end
 
   def call
-    count = @scope.count
-    if count.zero?
-      return { employees_count: 0, min_salary: nil, max_salary: nil, avg_salary: nil }
-    end
+    result = @scope.pick(
+      Arel.sql("COUNT(*), MIN(salary), MAX(salary), AVG(salary)")
+    )
+
+    count = result[0].to_i
+    return { employees_count: 0, min_salary: nil, max_salary: nil, avg_salary: nil } if count.zero?
 
     {
       employees_count: count,
-      min_salary:      @scope.minimum(:salary).to_f,
-      max_salary:      @scope.maximum(:salary).to_f,
-      avg_salary:      @scope.average(:salary).to_f
+      min_salary:      result[1].to_f,
+      max_salary:      result[2].to_f,
+      avg_salary:      result[3].to_f
     }
   end
 end
