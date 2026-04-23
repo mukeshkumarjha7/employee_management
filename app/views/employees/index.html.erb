@@ -1,19 +1,21 @@
 <% content_for :title, "Employees" %>
 
-<p style="color: green"><%= notice %></p>
-
-<h1>Employees</h1>
-
-<div id="employees">
-  <% @employees.each do |employee| %>
-    <%= render employee %>
-    <p>
-      <%= link_to "Show", employee %> |
-      <%= link_to "Edit", edit_employee_path(employee) %> |
-      <%= link_to "Delete", employee, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-    </p>
-    <hr>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 fw-bold border-bottom border-primary pb-2">Employees</h1>
+  <%= link_to "New Employee", new_employee_path, class: "btn btn-primary btn-sm" %>
 </div>
 
-<%= link_to "New Employee", new_employee_path %>
+<div id="employees">
+  <% if @employees.empty? %>
+    <div class="alert alert-info">No employees found. <%= link_to "Add one", new_employee_path %>.</div>
+  <% else %>
+    <% @employees.each do |employee| %>
+      <%= render employee %>
+      <div class="d-flex gap-2 mb-3">
+        <%= link_to "Show", employee, class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "Edit", edit_employee_path(employee), class: "btn btn-outline-warning btn-sm" %>
+        <%= link_to "Delete", employee, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

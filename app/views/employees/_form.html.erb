@@ -1,52 +1,53 @@
-<%= form_with(model: employee) do |form| %>
-  <% if employee.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+<div class="card shadow-sm" style="max-width: 540px">
+  <div class="card-body">
+    <%= form_with(model: employee) do |form| %>
+      <% if employee.errors.any? %>
+        <div class="alert alert-danger">
+          <p class="fw-semibold mb-1"><%= pluralize(employee.errors.count, "error") %> prevented this record from being saved:</p>
+          <ul class="mb-0">
+            <% employee.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% employee.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="mb-3">
+        <%= form.label :first_name, class: "form-label fw-semibold" %>
+        <%= form.text_field :first_name, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :first_name, style: "display: block" %>
-    <%= form.text_field :first_name %>
+      <div class="mb-3">
+        <%= form.label :last_name, class: "form-label fw-semibold" %>
+        <%= form.text_field :last_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :job_title, class: "form-label fw-semibold" %>
+        <%= form.text_field :job_title, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :country, class: "form-label fw-semibold" %>
+        <%= form.text_field :country, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :salary, class: "form-label fw-semibold" %>
+        <%= form.text_field :salary, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label fw-semibold" %>
+        <%= form.text_field :email, class: "form-control" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :date_of_joining, class: "form-label fw-semibold" %>
+        <%= form.date_field :date_of_joining, class: "form-control" %>
+      </div>
+
+      <%= form.submit class: "btn btn-primary" %>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :last_name, style: "display: block" %>
-    <%= form.text_field :last_name %>
-  </div>
-
-  <div>
-    <%= form.label :job_title, style: "display: block" %>
-    <%= form.text_field :job_title %>
-  </div>
-
-  <div>
-    <%= form.label :country, style: "display: block" %>
-    <%= form.text_field :country %>
-  </div>
-
-  <div>
-    <%= form.label :salary, style: "display: block" %>
-    <%= form.text_field :salary %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :date_of_joining, style: "display: block" %>
-    <%= form.date_field :date_of_joining %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

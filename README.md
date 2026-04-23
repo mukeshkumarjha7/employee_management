@@ -42,4 +42,4 @@ A Ruby on Rails application for managing employees, built with Rails 8.1 and Pos
 	rails db:migrate
 
 ### 3. Start the server
-	rails server
+	bin/dev

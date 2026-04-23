@@ -1,29 +1,17 @@
-<div id="<%= dom_id employee %>">
-  <div>
-    <p><strong>First Name:</strong> <%= employee.first_name %></p>
-  </div>
-
-  <div>
-    <p><strong>Last Name:</strong> <%= employee.last_name %></p>
-  </div>
-
-  <div>
-    <p><strong>Job Title:</strong> <%= employee.job_title %></p>
-  </div>
-
-  <div>
-    <p><strong>Country:</strong> <%= employee.country %></p>
-  </div>
-
-  <div>
-    <p><strong>Salary:</strong> <%= employee.salary %></p>
-  </div>
-
-  <div>
-    <p><strong>Email:</strong> <%= employee.email %></p>
-  </div>
-
-  <div>
-    <p><strong>Date of Joining:</strong> <%= employee.date_of_joining %></p>
+<div id="<%= dom_id employee %>" class="card mb-3 shadow-sm">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div><p><span class="text-muted small fw-semibold">First Name</span><br><%= employee.first_name %></p></div>
+        <div><p><span class="text-muted small fw-semibold">Job Title</span><br><%= employee.job_title %></p></div>
+        <div><p><span class="text-muted small fw-semibold">Salary</span><br><%= employee.salary %></p></div>
+        <div><p><span class="text-muted small fw-semibold">Date of Joining</span><br><%= employee.date_of_joining %></p></div>
+      </div>
+      <div class="col-md-6">
+        <div><p><span class="text-muted small fw-semibold">Last Name</span><br><%= employee.last_name %></p></div>
+        <div><p><span class="text-muted small fw-semibold">Country</span><br><%= employee.country %></p></div>
+        <div><p><span class="text-muted small fw-semibold">Email</span><br><%= employee.email %></p></div>
+      </div>
+    </div>
   </div>
 </div>

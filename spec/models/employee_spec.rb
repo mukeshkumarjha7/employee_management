@@ -130,7 +130,7 @@ RSpec.describe Employee, type: :model do
     new_record = Employee.new(subject.attributes)
     expect(new_record).not_to be_valid
   end
-#
+
   it "returns employee for given first and last name" do
     employee = Employee.create!(subject.attributes)
     record = Employee.by_name("Mukesh", "Jha")

@@ -1,57 +1,76 @@
 <% content_for :title, "Salary Insights" %>
 
-<h1>Salary Insights</h1>
+<h1 class="h3 fw-bold border-bottom border-primary pb-2 mb-4">Salary Insights</h1>
 
-<div>
-  <%= form_with url: salary_insights_path, method: :get do |form| %>
-    <div>
-      <%= form.label :country, "Country", style: "display: block" %>
-      <%= form.text_field :country, value: @country, placeholder: "e.g. India" %>
-    </div>
+<!-- Search Form -->
+<div class="card shadow-sm mb-5" style="max-width: 480px">
+  <div class="card-body">
+    <%= form_with url: salary_insights_path, method: :get do |form| %>
+      <div class="mb-3">
+        <%= form.label :country, "Country", class: "form-label fw-semibold" %>
+        <%= form.text_field :country, value: @country, placeholder: "e.g. India", class: "form-control" %>
+      </div>
 
-    <div>
-      <%= form.label :job_title, "Job Title (optional)", style: "display: block" %>
-      <%= form.text_field :job_title, value: @job_title, placeholder: "e.g. Software Engineer" %>
-    </div>
+      <div class="mb-4">
+        <%= form.label :job_title, "Job Title (optional)", class: "form-label fw-semibold" %>
+        <%= form.text_field :job_title, value: @job_title, placeholder: "e.g. Software Engineer", class: "form-control" %>
+      </div>
 
-    <div>
-      <%= form.submit "Search" %>
-    </div>
-  <% end %>
+      <%= form.submit "Search", class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>
 
+<!-- Results -->
 <% if @insights %>
-  <h2>Results</h2>
-
-  <div>
-    <p><strong>Country:</strong> <%= @country %></p>
-  </div>
-
-  <% if @job_title.present? %>
-    <div>
-      <p><strong>Job Title:</strong> <%= @job_title %></p>
-    </div>
-  <% end %>
-
-  <div>
-    <p><strong>Employees Count:</strong> <%= @insights[:employees_count] %></p>
-  </div>
+  <h2 class="h5 fw-semibold mb-3">
+    Results for <span class="text-primary"><%= @country %></span>
+    <% if @job_title.present? %>
+      &mdash; <span class="text-primary"><%= @job_title %></span>
+    <% end %>
+  </h2>
 
   <% if @insights[:employees_count] == 0 %>
-    <div>
-      <p>No employees found for the given search criteria.</p>
+    <div class="alert alert-warning">
+      <div><p class="mb-0">No employees found for the given search criteria.</p></div>
     </div>
   <% else %>
-    <div>
-      <p><strong>Min Salary:</strong> <%= @insights[:min_salary] %></p>
-    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div class="card text-center shadow-sm border-primary">
+          <div class="card-body">
+            <p class="text-muted small fw-semibold text-uppercase mb-1">Employees</p>
+            <div><p class="h3 fw-bold text-primary mb-0"><%= @insights[:employees_count] %></p></div>
+          </div>
+        </div>
+      </div>
 
-    <div>
-      <p><strong>Max Salary:</strong> <%= @insights[:max_salary] %></p>
-    </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center shadow-sm border-success">
+          <div class="card-body">
+            <p class="text-muted small fw-semibold text-uppercase mb-1">Min Salary</p>
+            <div><p class="h3 fw-bold text-success mb-0"><%= @insights[:min_salary] %></p></div>
+          </div>
+        </div>
+      </div>
 
-    <div>
-      <p><strong>Average Salary:</strong> <%= @insights[:avg_salary] %></p>
+      <div class="col-6 col-md-3">
+        <div class="card text-center shadow-sm border-danger">
+          <div class="card-body">
+            <p class="text-muted small fw-semibold text-uppercase mb-1">Max Salary</p>
+            <div><p class="h3 fw-bold text-danger mb-0"><%= @insights[:max_salary] %></p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card text-center shadow-sm border-warning">
+          <div class="card-body">
+            <p class="text-muted small fw-semibold text-uppercase mb-1">Avg Salary</p>
+            <div><p class="h3 fw-bold text-warning mb-0"><%= @insights[:avg_salary] %></p></div>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
 <% end %>
