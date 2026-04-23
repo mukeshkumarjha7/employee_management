@@ -42,7 +42,7 @@ RSpec.describe "salary_insights/index", type: :view do
     })
     render
     assert_select "h2 span", text: Regexp.new("Software Engineer")
-    assert_select cell_selector, text: Regexp.new("57500")
+    assert_select cell_selector, text: Regexp.new("57500.00")
   end
 
   it "renders 0 employees when count is zero" do
