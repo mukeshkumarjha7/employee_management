@@ -1,12 +1,12 @@
-<% content_for :title, "Editing employee" %>
+<% content_for :title, "Edit Employee" %>
 
-<h1>Editing employee</h1>
+<h1>Edit Employee</h1>
 
 <%= render "form", employee: @employee %>
 
 <br>
 
 <div>
-  <%= link_to "Show this employee", @employee %> |
-  <%= link_to "Back to employees", employees_path %>
+  <%= link_to "Show", @employee %> |
+  <%= link_to "Back to Employees", employees_path %>
 </div>

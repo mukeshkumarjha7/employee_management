@@ -1,6 +1,6 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Employees" %>
+
+<p style="color: green"><%= notice %></p>
 
 <h1>Employees</h1>
 
@@ -8,9 +8,12 @@
   <% @employees.each do |employee| %>
     <%= render employee %>
     <p>
-      <%= link_to "Show this employee", employee %>
+      <%= link_to "Show", employee %> |
+      <%= link_to "Edit", edit_employee_path(employee) %> |
+      <%= link_to "Delete", employee, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
     </p>
+    <hr>
   <% end %>
 </div>
 
-<%= link_to "New employee", new_employee_path %>
+<%= link_to "New Employee", new_employee_path %>

@@ -1,10 +1,13 @@
+<% content_for :title, "#{@employee.first_name} #{@employee.last_name}" %>
+
 <p style="color: green"><%= notice %></p>
+
+<h1>Employee Details</h1>
 
 <%= render @employee %>
 
 <div>
-  <%= link_to "Edit this employee", edit_employee_path(@employee) %> |
-  <%= link_to "Back to employees", employees_path %>
-
-  <%= button_to "Destroy this employee", @employee, method: :delete %>
+  <%= link_to "Edit", edit_employee_path(@employee) %> |
+  <%= link_to "Back to Employees", employees_path %>
+  <%= button_to "Delete", @employee, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
 </div>
