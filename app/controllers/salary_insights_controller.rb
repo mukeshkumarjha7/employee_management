@@ -1,10 +1,20 @@
 class SalaryInsightsController < ApplicationController
   def index
     if params[:country].blank?
-      return render json: { error: "country name is required" }, status: :bad_request
+      respond_to do |format|
+        format.html { render :index }
+        format.json { render json: { error: "country name is required" }, status: :bad_request }
+      end
+      return
     end
 
-    insights = SalaryInsightsService.new(params[:country], job_title: params[:job_title]).call
-    render json: insights, status: :ok
+    @country   = params[:country]
+    @job_title = params[:job_title]
+    @insights  = SalaryInsightsService.new(@country, job_title: @job_title).call
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @insights, status: :ok }
+    end
   end
 end
