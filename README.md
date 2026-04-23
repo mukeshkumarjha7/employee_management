@@ -11,20 +11,16 @@ A Ruby on Rails application for managing employees, built with Rails 8.1 and Pos
 ## 1. Install dependencies
 
 ### Install Ruby
-
-
 	brew install rbenv ruby-build                                                           
 	rbenv install 3.2.2                                                                     
 	rbenv global 3.2.2                                                                      
 
 
 ### Install Rails
- 
 	gem install rails                                                                      
    
 
 ### Install Postgres
-
 	brew install postgresql@16
 	brew services start postgresql@16
 
@@ -41,5 +37,13 @@ A Ruby on Rails application for managing employees, built with Rails 8.1 and Pos
 	rails db:create
 	rails db:migrate
 
+### 3. Seed sample data(Optional)
+   Add sample data in /db folder. Sample first_name, last_name is added in file.
+
+	rails db:seed
+
+
 ### 3. Start the server
 	bin/dev
+
+
