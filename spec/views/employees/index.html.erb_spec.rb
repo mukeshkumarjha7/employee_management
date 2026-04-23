@@ -13,7 +13,7 @@ RSpec.describe "employees/index", type: :view do
   end
 
   before(:each) do
-    assign(:employees, [
+    employees = [
       Employee.create!(
         first_name: "Mukesh",
         last_name: "Jha",
@@ -30,7 +30,8 @@ RSpec.describe "employees/index", type: :view do
         salary: 65000,
         email: "rahul@gmail.com"
       )
-    ])
+    ]
+    assign(:employees, Kaminari.paginate_array(employees).page(1).per(10))
   end
 
   it "renders a list of employees" do

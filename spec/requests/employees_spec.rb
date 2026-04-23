@@ -31,7 +31,9 @@ RSpec.describe "/employees", type: :request do
   end
 
   describe "pagination" do
-    first_names = %w[Mukesh Rakesh Anil Sikha Anjali Anil Henry Rahul Jack Roshan Will]
+    # Will has joined recently so it appears first (page 1)
+    # Odlest is oldest employee so it appears last (page 2)
+    first_names = %w[Mukesh Rakesh Anil Sikha Anjali Henry Rahul Jack Roshan Will]
 
     before do
       first_names.each_with_index do |name, i|
@@ -41,27 +43,47 @@ RSpec.describe "/employees", type: :request do
           email: "#{name.downcase}#{i}@example.com",
           job_title: "Engineer",
           country: "India",
-          salary: 50000
+          salary: 50000,
+          date_of_joining: i.days.ago.to_date
         )
       end
+      
+      # oldest employee
+      Employee.create!(
+        first_name: "Oldest",
+        last_name: "Smith",
+        email: "oldest@example.com",
+        job_title: "Engineer",
+        country: "India",
+        salary: 50000,
+        date_of_joining: 100.days.ago.to_date
+      )
     end
 
     it "returns first page with 10 employees" do
       get employees_url
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Mukesh")
-      expect(response.body).not_to include("Will")
+      expect(response.body).not_to include("Oldest")
     end
 
     it "returns second page when page=2 is passed" do
       get employees_url, params: { page: 2 }
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Will")
+      expect(response.body).to include("Oldest")
     end
 
     it "renders pagination links" do
       get employees_url
       expect(response.body).to include("page=2")
+    end
+
+    # per_page=5 DESC: Mukesh..Anjali on page 1, Oldest on page 3
+    it "respects per_page param" do
+      get employees_url, params: { per_page: 5 }
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("page=2")
+      expect(response.body).not_to include("Oldest")
     end
   end
 

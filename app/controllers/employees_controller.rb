@@ -3,7 +3,9 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.order(Arel.sql("date_of_joining DESC NULLS LAST"))
+                         .page(params[:page] || 1)
+                         .per(params[:per_page] || 10)
   end
 
   # GET /employees/1 or /employees/1.json

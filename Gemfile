@@ -66,3 +66,4 @@ group :test do
 end
 
 gem "rspec-rails", "~> 8.0"
+gem "kaminari"

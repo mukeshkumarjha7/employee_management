@@ -25,14 +25,14 @@ RSpec.describe "salary_insights/index", type: :view do
 
   it "renders salary insights for a country" do
     render
-    assert_select cell_selector, text: Regexp.new("India")
+    assert_select "h2 span", text: Regexp.new("India")
     assert_select cell_selector, text: Regexp.new("50000")
     assert_select cell_selector, text: Regexp.new("80000")
     assert_select cell_selector, text: Regexp.new("65000")
     assert_select cell_selector, text: Regexp.new("3")
   end
 
-  it "renders average salary " do
+  it "renders average salary" do
     assign(:job_title, "Software Engineer")
     assign(:insights, {
       employees_count: 2,
@@ -41,7 +41,7 @@ RSpec.describe "salary_insights/index", type: :view do
       avg_salary:      57500.0
     })
     render
-    assert_select cell_selector, text: Regexp.new("Software Engineer")
+    assert_select "h2 span", text: Regexp.new("Software Engineer")
     assert_select cell_selector, text: Regexp.new("57500")
   end
 
@@ -53,6 +53,6 @@ RSpec.describe "salary_insights/index", type: :view do
       avg_salary:      nil
     })
     render
-    assert_select cell_selector, text: Regexp.new("0")
+    assert_select cell_selector, text: Regexp.new("No employees found")
   end
 end
