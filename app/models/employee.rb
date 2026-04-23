@@ -1,7 +1,9 @@
 class Employee < ApplicationRecord
     validates :first_name, :last_name, :job_title, :country, :email, presence: true
+    validates :first_name, :last_name, :country, format: { with: /\A[a-zA-Z\s]+\z/ }
     validates :salary, presence: true, numericality: { greater_than: 0 }
-    validates :email, uniqueness: true
+    validates :email, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+    validates :date_of_joining, comparison: { less_than_or_equal_to: -> { Date.today } }, allow_blank: true
 
     scope :by_name, ->(first_name, last_name) { where(first_name: first_name, last_name: last_name) }
     scope :by_first_name, ->(first_name) { where(first_name: first_name) }
